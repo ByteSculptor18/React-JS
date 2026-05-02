@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Example</title>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        function ChatInput() {
+            return (
+                <div>
+                    <input placeholder="Type message..." />
+                    <button>Send</button>
+                </div>
+            );
+        }
+
+        function Chatbot() {
+            return (
+                <div>
+                    <h2>Chatbot</h2>
+                    <ChatInput />
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<Chatbot />);
+    </script>
+</body>
+</html>
