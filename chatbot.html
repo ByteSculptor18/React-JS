@@ -16,7 +16,9 @@
         function ChatInput() {
             return (
                 <div>
-                    <input placeholder="Send a message..." size="40" />
+                    <input 
+                        placeholder="Send a message..." 
+                        size="40" />
                     <button>Send</button>
                 </div>
             );
@@ -29,7 +31,11 @@
             if (imgSender === 'bot') {
                 return (
                     <div>
-                        <img src="Robot.png" alt="Bot" style={{ width: '20px', height: '20px', marginRight: '10px' }} />
+                        <img src="Robot.png" alt="Bot" style={{ 
+                            width: '20px', 
+                            height: '20px', 
+                            marginRight: '10px' 
+                        }} />
                         <span>{message}</span>
                     </div>
                 );
@@ -37,26 +43,39 @@
             return (
                 <div>
                     <span>{message}</span>
-                    <img src="User.png" alt="User" style={{ width: '20px', height: '20px', marginLeft: '10px' }} />
+                    <img src="User.png" alt="User" style={{ 
+                        width: '20px', 
+                        height: '20px', 
+                        marginLeft: '10px' 
+                    }} />
                 </div>
             );
         }
 
-        function Chatbot() {
+        function App() {
+            const chatMessages = [
+                { text: "How are you?", sender: "user" },
+                { text: "I am fine, thank you!", sender: "bot" },
+                { text: "What can you do?", sender: "user" },
+                { text: "I can chat with you!", sender: "bot" }
+            ];
             return (
                 <div>
                     <h2>Chatbot</h2>
                     <ChatInput />
-                    <ChatMessage text="How are you?" sender="user" />
-                    <ChatMessage text="I am fine, thank you!" sender="bot" />
-                    <ChatMessage text="What can you do?" sender="user" />
-                    <ChatMessage text="I can chat with you!" sender="bot" />
+                    {chatMessages.map((msg, index) => (
+                        <ChatMessage 
+                            key={index} 
+                            text={msg.text} 
+                            sender={msg.sender} 
+                        />
+                    ))}
                 </div>
             );
         }
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<Chatbot />);
+        root.render(<App />);
     </script>
 </body>
 </html>
