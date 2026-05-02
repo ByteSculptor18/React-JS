@@ -22,11 +22,22 @@
             );
         }
 
-        function ChatMessage({ text }) {
+        function ChatMessage({ text, sender }) {
+            //console.log(text);
+            const message = text;
+            const imgSender = sender;
+            if (imgSender === 'bot') {
+                return (
+                    <div>
+                        <img src="Robot.png" alt="Bot" style={{ width: '20px', height: '20px', marginRight: '10px' }} />
+                        <span>{message}</span>
+                    </div>
+                );
+            }
             return (
                 <div>
-                    <span>{text}</span>
-                    <img src="User.png" alt="User" width="20" />
+                    <span>{message}</span>
+                    <img src="User.png" alt="User" style={{ width: '20px', height: '20px', marginLeft: '10px' }} />
                 </div>
             );
         }
@@ -35,8 +46,11 @@
             return (
                 <div>
                     <h2>Chatbot</h2>
-                    <ChatMessage text="Hello Chatbot" />
                     <ChatInput />
+                    <ChatMessage text="How are you?" sender="user" />
+                    <ChatMessage text="I am fine, thank you!" sender="bot" />
+                    <ChatMessage text="What can you do?" sender="user" />
+                    <ChatMessage text="I can chat with you!" sender="bot" />
                 </div>
             );
         }
