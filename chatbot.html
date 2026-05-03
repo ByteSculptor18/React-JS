@@ -13,22 +13,26 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        function ChatInput() {
+
+        function ChatInput({ inputText, setInputText, sendMessage }) {
             return (
-                <div>
+                <>
                     <input 
                         placeholder="Send a message..." 
-                        size="40" />
-                    <button>Send</button>
-                </div>
+                        size="40"
+                        value={inputText}
+                        onChange={(e) => setInputText(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") sendMessage();
+                        }}
+                    />
+                    <button onClick={sendMessage}>Send</button>
+                </>
             );
         }
 
         function ChatMessage({ text, sender }) {
-            //console.log(text);
-            const message = text;
-            const imgSender = sender;
-            if (imgSender === 'bot') {
+            if (sender === 'bot') {
                 return (
                     <div>
                         <img src="Robot.png" alt="Bot" style={{ 
@@ -36,13 +40,14 @@
                             height: '20px', 
                             marginRight: '10px' 
                         }} />
-                        <span>{message}</span>
+                        <span>{text}</span>
                     </div>
                 );
             }
+
             return (
                 <div>
-                    <span>{message}</span>
+                    <span>{text}</span>
                     <img src="User.png" alt="User" style={{ 
                         width: '20px', 
                         height: '20px', 
@@ -53,29 +58,65 @@
         }
 
         function App() {
-            const chatMessages = [
+            const [chatMessages, setChatMessages] = React.useState([
                 { text: "How are you?", sender: "user", key: 1 },
-                { text: "I am fine, thank you!", sender: "bot", key: 2 },
-                { text: "What can you do?", sender: "user", key: 3 },
-                { text: "I can chat with you!", sender: "bot", key: 4 }
-            ];
+                { text: "I am fine, thank you!", sender: "bot", key: 2 }
+            ]);
+
+            const [inputText, setInputText] = React.useState("");
+
+            function sendMessage() {
+                if (!inputText.trim()) return;
+
+                const newUserMessage = {
+                    text: inputText,
+                    sender: "user",
+                    key: Date.now()
+                };
+
+                // Add user message
+                setChatMessages(prev => [...prev, newUserMessage]);
+
+                // Optional: auto bot reply
+                setTimeout(() => {
+                    const botReply = {
+                        text: "I received: " + inputText,
+                        sender: "bot",
+                        key: Date.now() + 1
+                    };
+
+                    setChatMessages(prev => [...prev, botReply]);
+                }, 500);
+
+                setInputText("");
+            }
+
             return (
                 <div>
                     <h2>Chatbot</h2>
-                    <ChatInput />
-                    {chatMessages.map((msg) => (
-                        <ChatMessage 
-                            key={msg.key} 
-                            text={msg.text} 
-                            sender={msg.sender} 
-                        />
-                    ))}
+
+                    <ChatInput 
+                        inputText={inputText}
+                        setInputText={setInputText}
+                        sendMessage={sendMessage}
+                    />
+
+                    <div style={{ marginTop: "20px" }}>
+                        {chatMessages.map((msg) => (
+                            <ChatMessage 
+                                key={msg.key} 
+                                text={msg.text} 
+                                sender={msg.sender} 
+                            />
+                        ))}
+                    </div>
                 </div>
             );
         }
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
+
     </script>
 </body>
 </html>
