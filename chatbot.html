@@ -31,7 +31,7 @@
             if (imgSender === 'bot') {
                 return (
                     <div>
-                        <img src="Robot.png" alt="Bot" style={{ 
+                        <img src="\React JS\Robot.png" alt="Bot" style={{ 
                             width: '20px', 
                             height: '20px', 
                             marginRight: '10px' 
@@ -54,18 +54,18 @@
 
         function App() {
             const chatMessages = [
-                { text: "How are you?", sender: "user" },
-                { text: "I am fine, thank you!", sender: "bot" },
-                { text: "What can you do?", sender: "user" },
-                { text: "I can chat with you!", sender: "bot" }
+                { text: "How are you?", sender: "user", key: 1 },
+                { text: "I am fine, thank you!", sender: "bot", key: 2 },
+                { text: "What can you do?", sender: "user", key: 3 },
+                { text: "I can chat with you!", sender: "bot", key: 4 }
             ];
             return (
                 <div>
                     <h2>Chatbot</h2>
                     <ChatInput />
-                    {chatMessages.map((msg, index) => (
+                    {chatMessages.map((msg) => (
                         <ChatMessage 
-                            key={index} 
+                            key={msg.key} 
                             text={msg.text} 
                             sender={msg.sender} 
                         />
